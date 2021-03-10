@@ -5,7 +5,7 @@ import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 
 
 // Screens
-import { Home, ItemDetail, checkin } from "./screens/";
+import { Cadastro, Login, Home, ItemDetail, checkin } from "./screens/";
 
 const theme = {
   ...DefaultTheme,
@@ -24,8 +24,10 @@ const App = () =>{
             screenOptions={{
               headerShown: false
             }}
-            initialRouteName={'Home'}
+            initialRouteName={'Login'}
           >
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Cadastro" component={Cadastro} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="ItemDetail" component={ItemDetail} />
             <Stack.Screen name="checkin" component={checkin} />

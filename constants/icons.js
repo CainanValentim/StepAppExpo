@@ -4,7 +4,7 @@ export const pagamento = require("../assets/icons/pagamento.png");
 export const chevron = require("../assets/icons/chevron_icon.png");
 export const user = require("../assets/icons/user_icon.png");
 export const trainer = require("../assets/icons/trainer.png");
-export const dashboard = require("../assets/icons/dashboard_icon.png");
+export const logotipo = require("../assets/icons/logotipo.png");
 export const menu = require("../assets/icons/menu_icon.png");
 export const checkin = require("../assets/icons/checkin.png");
 export const adiamento = require("../assets/icons/adiamento.png");
@@ -20,7 +20,7 @@ export default {
     chevron,
     user,
     trainer,
-    dashboard,
+    logotipo,
     menu,
     checkin,
     adiamento,

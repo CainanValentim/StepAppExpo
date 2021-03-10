@@ -240,7 +240,7 @@ const Home = ({ navigation }) => {
                     onPress={() => console.log("Configuracao on Clicked")}
                     >
                         <Image
-                            source={icons.notificacao}
+                            source={icons.configuracao}
                             resizeMode="contain"
                             style={{
                                 width: 25,

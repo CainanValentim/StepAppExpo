@@ -5,7 +5,8 @@ import {
     View,
     Text,
     ScrollView,
-    Button
+    TouchableOpacity
+    
 
 } from 'react-native';
 
@@ -43,11 +44,12 @@ const checkin = ({ route }) => {
                 </View>
 
          
-                <Button
-                    title="Fazer Check-in"
-                    color="#FE5430"
-                    onPress={() => Alert.alert('Button with adjusted color pressed')}
-                />
+                <TouchableOpacity
+                    style={styles.mainBtn}
+                    onPress={() => {}}
+                >
+                <Text style={styles.btnText}>Fazer check-in</Text>
+                </TouchableOpacity>
 
             </View>
         )
@@ -100,6 +102,18 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
         elevation: 9,
-    }
+    },
+    mainBtn: {
+        backgroundColor: COLORS.secondary,
+        padding: 10,
+        borderRadius:5,
+        alignItems: "center",
+
+      },
+      btnText: {
+        color: '#FFF',
+        fontSize: 17,
+        fontWeight:'bold'
+      },
 })
 export default checkin;
