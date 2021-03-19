@@ -1,16 +1,13 @@
-import React from 'react';
-import {
-    StyleSheet,
-    View,
-    Text
-} from 'react-native';
+import React from "react";
+import { StyleSheet, View, Text } from "react-native";
+import styles from './styles';
 
 const ItemDetail = () => {
-    return(
-        <View>
-            <Text>ItemDetail</Text>
-        </View>
-    )
-}
+  return (
+    <View style={styles.container3}>
+      <Text style={styles.textmaisum}>Nada aqui</Text>
+    </View>
+  );
+};
 
 export default ItemDetail;

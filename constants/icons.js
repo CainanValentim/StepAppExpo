@@ -14,18 +14,18 @@ const back_arrow = require("../assets/icons/back_arrow.png");
 const transaction = require("../assets/icons/transaction.png");
 
 export default {
-    configuracao,
-    search,
-    pagamento,
-    chevron,
-    user,
-    trainer,
-    logotipo,
-    menu,
-    checkin,
-    adiamento,
-    incidente,
-    notificacao,
-    back_arrow,
-    transaction
-}
+  configuracao,
+  search,
+  pagamento,
+  chevron,
+  user,
+  trainer,
+  logotipo,
+  menu,
+  checkin,
+  adiamento,
+  incidente,
+  notificacao,
+  back_arrow,
+  transaction,
+};
