@@ -162,32 +162,6 @@ const Home = ({ navigation }) => {
         },
       ],
     },
-
-    {
-      id: 3,
-      name: "Registrar",
-      title: "Registrar",
-      productList: [
-        {
-          productId: 6,
-          secao: "Registrar",
-          productName: "Product 7",
-          price: 10.0,
-        },
-        {
-          productId: 7,
-          secao: "Registrar",
-          productName: "Product 8",
-          price: 10.0,
-        },
-        {
-          productId: 8,
-          secao: "Registrar",
-          productName: "Product 9",
-          price: 10.0,
-        },
-      ],
-    },
   ]);
 
   const [selectedTab, setSelectedTab] = React.useState({
@@ -342,7 +316,7 @@ const Home = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container2}>
-      <StatusBar backgroundColor="black" barStyle="light-content" />
+      <StatusBar backgroundColor={COLORS.primary} barStyle="light-content" />
       {renderHeader()}
 
       {renderTitle(selectedTab.title)}

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { ColorPropType, StyleSheet } from "react-native";
 import { icons, COLORS, FONTS, SIZES } from "../constants";
 const styles = StyleSheet.create({
   container: {
@@ -16,6 +16,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.primary,
+  },
+  containerCadastro: {
+    padding: 25,
+    flex: 1,
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   shadow: {
     shadowColor: "#000",
@@ -72,7 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 5,
     top: "20%",
-    paddingBottom: 40,
+    paddingBottom: 20,
   },
   signin: {
     top: 0,
@@ -99,7 +106,24 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
-
+  InputTexto: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: COLORS.black,
+  },
+  InputTexto2: {
+    fontSize: 20,
+    marginRight: 12,
+    fontWeight: 'bold',
+    color: COLORS.black,
+    textShadowColor: COLORS.secondary,
+    textShadowRadius: 2,
+  },
+  InputTexto3: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: COLORS.black,
+  },
   Button: {
     padding: 29,
   },
@@ -120,6 +144,7 @@ const styles = StyleSheet.create({
   },
   BtnTextResgistro: {
     color: "#000000",
+    fontSize: 16,
     fontWeight: "bold",
   },
   ButtonCadastro: {
@@ -130,6 +155,14 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.secondary,
     padding: 10,
     borderRadius: 5,
+    alignItems: "center",
+  },
+  mainBtnCadastro2: {
+    backgroundColor: COLORS.secondary,
+    padding: 5,
+    width: 105,
+    height: 36,
+    borderRadius: 12,
     alignItems: "center",
   },
   btnTextCadastro: {

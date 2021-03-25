@@ -16,7 +16,7 @@ import { icons, COLORS, FONTS, SIZES } from "../constants";
 const Login = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="black" barStyle="light-content" />
+      <StatusBar backgroundColor={COLORS.primary} barStyle="light-content" />
 
       <View style={styles.middle}>
         <View style={styles.ImgContainer}>
