@@ -65,55 +65,82 @@ function Cadastro({navigation}) {
     }
   };
 
-  const navigateToLogin = () => {
+  const submeterBD = () => {
+    firebase.firestore().collection('users').add({
+      cpf: cpf,
+      datanasc: datanasc,
+      email: email,
+      nome: nome,
+      saude: saude,
+      saude_detail: saude_detail,
+      telefone: telefone,
+    });
     navigation.navigate('Login');
-  }
+  };
 
   const TLogs = async () => {
-    if(nome === ""|| email === "" || telefone === "" || cpf === "" || pwd === ""){
+    if(nome === "" || email === "" || telefone === "" || cpf === "" || pwd === ""){
       Alert.alert(
         "Erro",
         "Campo vazio",
-        [{ text: "Ok", onPress: () => console.log("Ok2") }]
+        [{ text: "Ok", onPress: () => console.log("Erro: Campo vazio") }]
       );
     }else if (saude === true && saude_detail === ""){
       Alert.alert(
         "Erro",
         "Nada especificado no problema de saúde",
-        [{ text: "Ok", onPress: () => console.log("Ok2") }]
+        [{ text: "Ok", onPress: () => console.log("Erro: Campo saúde") }]
       );
     }else if (pwd.length < 6){
       Alert.alert(
         "Erro",
         "Senha muito curta, deve ter pelo menos 6 caracteres",
-        [{ text: "Ok", onPress: () => console.log("Ok3") }]
+        [{ text: "Ok", onPress: () => console.log("Erro: Senha curta") }]
       );
     }else if (pwd !== pwdCon){
       Alert.alert(
         "Erro",
         "As senhas não coincidem.",
-        [{ text: "Ok", onPress: () => console.log("Ok") }]
+        [{ text: "Ok", onPress: () => console.log("Erro: Senhas não coincidem") }]
+      );
+    }else if ((datanasc.getFullYear()) > (new Date().getFullYear() - 10)){
+      Alert.alert(
+        "Erro",
+        "Data Inválida",
+        [{ text: "Ok", onPress: () => console.log(datanasc.getFullYear()) }]
       );
     }else{
-      console.log("Deu Certo!");
-      firebase.firestore().collection('users').add({
-        cpf: cpf,
-        datanasc: datanasc,
-        email: email,
-        nome: nome,
-        saude: saude,
-        saude_detail: saude_detail,
-        telefone: telefone,
-      });
-      await auth.createUserWithEmailAndPassword(email, pwd).then(navigateToLogin);
+      await auth.createUserWithEmailAndPassword(email, pwd)
+        .then(submeterBD)
+        .catch((error) => {
+          if (error.code === "auth/email-already-in-use") {
+            Alert.alert(
+              "Erro",
+              "Email já em uso.",
+              [{ text: "Ok", onPress: () => console.log("Erro: Email em uso") }]
+            );
+          }else if (error.code === "auth/invalid-email") {
+            Alert.alert(
+              "Erro",
+              "Email Inválido.",
+              [{ text: "Ok", onPress: () => console.log("Erro: Email Errado") }]
+            );
+          }else{
+            Alert.alert(
+              "Erro",
+              error.toString(),
+              [{ text: "Ok", onPress: () => console.log("Erro: Erro Novo") }]
+            );
+          }
+        });
     };
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLORS.primary} barStyle="light-content" />
-      <ScrollView style={styles.middleCadastro}>
-        <View style={styles.formArea} >
+      <View style={styles.middleCadastro}>
+        <View style={styles.formArea}>
           <Text style={[styles.textContainer, styles.signin]}>Cadastro</Text>
           <View style={styles.mainForm}>
             <View style={styles.formItemsCadastro}>
@@ -163,7 +190,7 @@ function Cadastro({navigation}) {
                     <Text style={styles.btnTextCadastro}>Selecionar</Text>
                   </TouchableOpacity> 
                 </View>
-                <View style={styles.containerCadastro}>
+                <View style={styles.containerCadastro2}>
                   <Text style={styles.InputTexto3}>Tem algum problema de saúde?</Text>
                   <CheckBox
                     tintColors={{ true: "#FE5430" }}
@@ -205,7 +232,7 @@ function Cadastro({navigation}) {
             </View>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

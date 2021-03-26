@@ -19,8 +19,16 @@ const styles = StyleSheet.create({
   },
   containerCadastro: {
     padding: 25,
+    marginTop: 5,
+    marginBottom: 16,
     flex: 1,
-    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  containerCadastro2: {
+    padding: 5,
+    flex: 1,
+    marginBottom: 30,
     flexDirection: 'row',
     alignItems: 'center',
   },
