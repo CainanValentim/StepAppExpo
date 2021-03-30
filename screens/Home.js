@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -9,8 +9,11 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import styles from './styles';
+import firebase from "../firebase";
+import styles from "./styles";
 import { icons, COLORS, FONTS, SIZES } from "../constants";
+
+const auth = firebase.auth();
 
 const ScrollableTab = ({ tabList, selectedTab, onPress }) => {
   const renderItem = ({ item }) => (
@@ -215,6 +218,44 @@ const Home = ({ navigation }) => {
   }
 
   function renderTitle(title) {
+    const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState();
+
+    function onAuthStateChanged(user) {
+      setUser(user);
+      if (initializing) setInitializing(false);
+    }
+
+    useEffect(() => {
+      const subscriber = auth.onAuthStateChanged(onAuthStateChanged);
+      return subscriber;
+    }, []);
+
+    if (initializing) return null;
+
+    if (!user) {
+      return (
+        <View
+          style={{
+            marginTop: SIZES.padding,
+            marginHorizontal: SIZES.padding,
+            marginBottom: SIZES.padding,
+          }}
+        >
+          <Text
+            style={{
+              color: COLORS.lightGray,
+              fontSize: 30,
+              fontWeight: "bold",
+              paddingBottom: 6,
+            }}
+          >
+            Olá, Usuário
+          </Text>
+        </View>
+      );
+    }
+
     return (
       <View
         style={{
@@ -231,7 +272,7 @@ const Home = ({ navigation }) => {
             paddingBottom: 6,
           }}
         >
-          Olá, Cainan Valentim
+          Olá, {user.email}
         </Text>
       </View>
     );

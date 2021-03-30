@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styles from "./styles";
 import {
   StyleSheet,
@@ -13,15 +13,15 @@ import {
   CheckBox,
   Alert,
 } from "react-native";
+import firebase from "../firebase";
 import { greaterThan } from "react-native-reanimated";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import firebase from '../firebase';
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { icons, COLORS, FONTS, SIZES } from "../constants";
 
 const auth = firebase.auth();
 
-function anosAtras(dataparam){
-  return (dataparam.setFullYear(dataparam.getFullYear() - 10));
+function anosAtras(dataparam) {
+  return dataparam.setFullYear(dataparam.getFullYear() - 10);
 }
 
 function dataFormat(dataparam) {
@@ -34,10 +34,9 @@ function dataFormat(dataparam) {
   if (dia.length < 2) dia = "0" + dia;
 
   return [dia, mes, ano].join("/");
-};
+}
 
-function Cadastro({navigation}) {
-
+function Cadastro({ navigation }) {
   const [visible, setVisible] = useState(false);
 
   const [nome, setNome] = useState("");
@@ -57,16 +56,16 @@ function Cadastro({navigation}) {
   };
 
   const ConfirmSubmit = (event, selectedDate) => {
-    if (event.type === "set"){
+    if (event.type === "set") {
       setVisible(false);
       setDatanasc(selectedDate);
-    }else{
+    } else {
       setVisible(false);
     }
   };
 
   const submeterBD = () => {
-    firebase.firestore().collection('users').add({
+    firebase.firestore().collection("users").add({
       cpf: cpf,
       datanasc: datanasc,
       email: email,
@@ -75,65 +74,61 @@ function Cadastro({navigation}) {
       saude_detail: saude_detail,
       telefone: telefone,
     });
-    navigation.navigate('Login');
+    navigation.navigate("Login");
   };
 
   const TLogs = async () => {
-    if(nome === "" || email === "" || telefone === "" || cpf === "" || pwd === ""){
-      Alert.alert(
-        "Erro",
-        "Campo vazio",
-        [{ text: "Ok", onPress: () => console.log("Erro: Campo vazio") }]
-      );
-    }else if (saude === true && saude_detail === ""){
-      Alert.alert(
-        "Erro",
-        "Nada especificado no problema de saúde",
-        [{ text: "Ok", onPress: () => console.log("Erro: Campo saúde") }]
-      );
-    }else if (pwd.length < 6){
+    if (
+      nome === "" ||
+      email === "" ||
+      telefone === "" ||
+      cpf === "" ||
+      pwd === ""
+    ) {
+      Alert.alert("Erro", "Campo vazio", [
+        { text: "Ok", onPress: () => console.log("Erro: Campo vazio") },
+      ]);
+    } else if (saude === true && saude_detail === "") {
+      Alert.alert("Erro", "Nada especificado no problema de saúde", [
+        { text: "Ok", onPress: () => console.log("Erro: Campo saúde") },
+      ]);
+    } else if (pwd.length < 6) {
       Alert.alert(
         "Erro",
         "Senha muito curta, deve ter pelo menos 6 caracteres",
         [{ text: "Ok", onPress: () => console.log("Erro: Senha curta") }]
       );
-    }else if (pwd !== pwdCon){
-      Alert.alert(
-        "Erro",
-        "As senhas não coincidem.",
-        [{ text: "Ok", onPress: () => console.log("Erro: Senhas não coincidem") }]
-      );
-    }else if ((datanasc.getFullYear()) > (new Date().getFullYear() - 10)){
-      Alert.alert(
-        "Erro",
-        "Data Inválida",
-        [{ text: "Ok", onPress: () => console.log(datanasc.getFullYear()) }]
-      );
-    }else{
-      await auth.createUserWithEmailAndPassword(email, pwd)
+    } else if (pwd !== pwdCon) {
+      Alert.alert("Erro", "As senhas não coincidem.", [
+        {
+          text: "Ok",
+          onPress: () => console.log("Erro: Senhas não coincidem"),
+        },
+      ]);
+    } else if (datanasc.getFullYear() > new Date().getFullYear() - 10) {
+      Alert.alert("Erro", "Data Inválida", [
+        { text: "Ok", onPress: () => console.log(datanasc.getFullYear()) },
+      ]);
+    } else {
+      await auth
+        .createUserWithEmailAndPassword(email, pwd)
         .then(submeterBD)
         .catch((error) => {
           if (error.code === "auth/email-already-in-use") {
-            Alert.alert(
-              "Erro",
-              "Email já em uso.",
-              [{ text: "Ok", onPress: () => console.log("Erro: Email em uso") }]
-            );
-          }else if (error.code === "auth/invalid-email") {
-            Alert.alert(
-              "Erro",
-              "Email Inválido.",
-              [{ text: "Ok", onPress: () => console.log("Erro: Email Errado") }]
-            );
-          }else{
-            Alert.alert(
-              "Erro",
-              error.toString(),
-              [{ text: "Ok", onPress: () => console.log("Erro: Erro Novo") }]
-            );
+            Alert.alert("Erro", "Email já em uso.", [
+              { text: "Ok", onPress: () => console.log("Erro: Email em uso") },
+            ]);
+          } else if (error.code === "auth/invalid-email") {
+            Alert.alert("Erro", "Email Inválido.", [
+              { text: "Ok", onPress: () => console.log("Erro: Email Errado") },
+            ]);
+          } else {
+            Alert.alert("Erro", error.toString(), [
+              { text: "Ok", onPress: () => console.log("Erro: Erro Novo") },
+            ]);
           }
         });
-    };
+    }
   };
 
   return (
@@ -151,7 +146,7 @@ function Cadastro({navigation}) {
                   autoCorrect={false}
                   onChangeText={(x) => setNome(x)}
                 />
-                
+
                 <TextInput
                   style={styles.Input}
                   placeholder="CPF"
@@ -176,36 +171,41 @@ function Cadastro({navigation}) {
                 />
                 <Text style={styles.InputTexto}>Data de nascimento:</Text>
                 <View style={styles.containerCadastro}>
-                  {visible &&
+                  {visible && (
                     <DateTimePicker
-                      value = {datanasc}
-                      minimumDate = {new Date(1911, 0, 1)}
-                      maximumDate = {anosAtras(new Date())}
-                      mode = "date"
-                      onChange = {ConfirmSubmit}
+                      value={datanasc}
+                      minimumDate={new Date(1911, 0, 1)}
+                      maximumDate={anosAtras(new Date())}
+                      mode="date"
+                      onChange={ConfirmSubmit}
                     />
-                  }
+                  )}
                   <Text style={styles.InputTexto2}> {datafinal}</Text>
-                  <TouchableOpacity style={styles.mainBtnCadastro2} onPress={showDatePicker}>
+                  <TouchableOpacity
+                    style={styles.mainBtnCadastro2}
+                    onPress={showDatePicker}
+                  >
                     <Text style={styles.btnTextCadastro}>Selecionar</Text>
-                  </TouchableOpacity> 
+                  </TouchableOpacity>
                 </View>
                 <View style={styles.containerCadastro2}>
-                  <Text style={styles.InputTexto3}>Tem algum problema de saúde?</Text>
+                  <Text style={styles.InputTexto3}>
+                    Tem algum problema de saúde?
+                  </Text>
                   <CheckBox
                     tintColors={{ true: "#FE5430" }}
                     value={saude}
                     onValueChange={setSaude}
                   />
                 </View>
-                {saude &&
+                {saude && (
                   <TextInput
                     style={styles.Input}
                     placeholder="Cite-os"
                     autoCorrect={false}
                     onChangeText={(x) => setSaudeD(x)}
                   />
-                }
+                )}
                 <TextInput
                   style={styles.Input}
                   placeholder="Senha"
@@ -235,6 +235,6 @@ function Cadastro({navigation}) {
       </View>
     </SafeAreaView>
   );
-};
+}
 
 export default Cadastro;

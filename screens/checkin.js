@@ -7,13 +7,9 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import {
-  HeaderBar,
-  TextButton,
-  CheckinHistory,
-} from "../components";
+import { HeaderBar, TextButton, CheckinHistory } from "../components";
 import { dummyData, COLORS, SIZES, FONTS } from "../constants";
-import styles from './styles';
+import styles from "./styles";
 
 const checkin = ({ route }) => {
   const [trending, setTrending] = React.useState(dummyData.trendingCurrencies);
